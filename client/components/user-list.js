@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useParams, Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import Head from './head'
@@ -7,20 +7,18 @@ import Head from './head'
 const UserList = () => {
   const [userList, setUserList] = useState([])
   const { username } = useParams()
-  useEffect(() => {
-    axios
-      .get(`https://api.github.com/users/${username}/repos`)
-      .then((list) => setUserList(list.data))
-      // eslint-disable-next-line no-alert
-      .catch(() => alert('Github dont know this looser)'))
-    return () => {}
-  }, [])
+  const history = useHistory()
+  axios
+    .get(`https://api.github.com/users/${username}/repos`)
+    .then((list) => setUserList(list.data))
+    // eslint-disable-next-line no-alert
+    .catch(() => alert('Github dont know this looser)'))
 
   return (
     <div>
       <Head title="GitHub Repositories" />
       <div
-        className="flex col-auto bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 m-auto"
+        className="flex row-auto bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 m-auto"
         role="alert"
       >
         <div>
@@ -28,9 +26,9 @@ const UserList = () => {
           <p className="text-sm">For reaching README file click on the repository name</p>
         </div>
         <button
-          className="bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+          className="ml-20 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
           type="button"
-          // onClick={confirmName}
+          onClick={() => history.goBack()}
         >
           Back
         </button>
