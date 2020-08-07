@@ -33,6 +33,7 @@ const UserList = () => {
           Back
         </button>
       </div>
+      {/* what wrong with next code - memory leaks */}
       <div className="flex flex-col bg-indigo-200">
         {userList.map((it) => (
           <div
